@@ -20,9 +20,9 @@ export async function GET() {
 
   const { access_token } = await authResponse.json()
 
-  // Produkte abrufen
+  // Mehr Produkte laden damit nach dem Filtern genug übrig bleiben
   const productsResponse = await fetch(
-    `${apiUrl}/${projectKey}/products?limit=20`,
+    `${apiUrl}/${projectKey}/products?limit=100`,
     {
       headers: {
         Authorization: `Bearer ${access_token}`,
@@ -31,5 +31,33 @@ export async function GET() {
   )
 
   const data = await productsResponse.json()
-  return Response.json(data)
+
+  // Filterlogik
+  const filtered = (data.results || []).filter((p: any) => {
+    const current = p.masterData?.current
+    const nameDe = current?.name?.['de'] || ''
+    const nameEn = current?.name?.['en-US'] || ''
+    const name = nameDe || nameEn
+    const tags: string[] = p.masterData?.current?.searchKeywords?.['de']?.map((k: any) => k.text) || []
+    const hasImage = !!current?.masterVariant?.images?.[0]?.url
+
+    // Kein Bild -> raus
+    if (!hasImage) return false
+
+    // Name enthält "POS" -> raus
+    if (name.includes('POS')) return false
+
+    // Name beginnt mit "Auf Rezept:" -> raus
+    if (name.startsWith('Auf Rezept:')) return false
+
+    // Tag enthält "POS" -> raus
+    if (tags.some((t) => t.includes('POS'))) return false
+
+    // Tag enthält "Rezept" -> raus
+    if (tags.some((t) => t.toLowerCase().includes('rezept'))) return false
+
+    return true
+  })
+
+  return Response.json({ ...data, results: filtered, total: filtered.length })
 }
