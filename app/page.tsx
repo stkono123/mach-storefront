@@ -1,15 +1,6 @@
-async function getProducts() {
-  const res = await fetch(
-    `https://mach-storefront-sigma.vercel.app/api/products`,
-    { cache: 'no-store' }
-  )
-  const data = await res.json()
-  return data.results || []
-}
+import Image from 'next/image'
 
-export default async function Home() {
-  const products = await getProducts()
-
+export default function Home() {
   return (
     <>
       {/* Hero */}
@@ -57,39 +48,44 @@ export default async function Home() {
             </a>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {products.slice(0, 3).map((p: any) => {
-              const name =
-                p.masterData?.current?.name?.['de'] ||
-                p.masterData?.current?.name?.['en-US'] ||
-                'Produkt'
-              const description =
-                p.masterData?.current?.description?.['de'] ||
-                p.masterData?.current?.description?.['en-US'] ||
-                ''
-              const price =
-                p.masterData?.current?.masterVariant?.prices?.[0]?.value?.centAmount
-              const priceFormatted = price
-                ? `${(price / 100).toFixed(2).replace('.', ',')} €`
-                : 'Preis auf Anfrage'
-              const image =
-                p.masterData?.current?.masterVariant?.images?.[0]?.url
-
-              return (
-                <div key={p.id} className="bg-white border border-slate-200 p-6 rounded-xl group hover:shadow-lg transition-all duration-300">
-                  <div className="aspect-square mb-6 bg-slate-50 rounded-lg flex items-center justify-center overflow-hidden">
-                    <img src={image} alt={name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                  </div>
-                  <h3 className="font-manrope text-lg font-semibold mb-2 text-slate-900 line-clamp-2">{name}</h3>
-                  <p className="text-slate-500 text-sm mb-4 line-clamp-2">{description}</p>
-                  <div className="flex justify-between items-center">
-                    <span className="font-manrope text-2xl font-bold text-slate-900">{priceFormatted}</span>
-                    <button className="bg-slate-100 p-2 rounded-full hover:bg-teal-700 hover:text-white transition-colors">
-                      <span className="material-symbols-outlined">add_shopping_cart</span>
-                    </button>
-                  </div>
+            {[
+              {
+                category: 'ORTHOPÄDIE',
+                name: 'Aktiv-Kniebandage Pro',
+                description: 'Optimale Stabilisierung und Entlastung für das Kniegelenk im Alltag.',
+                price: '49,95 €',
+                image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuA1Sy6X78A4ncP-_EPVI2rwWCo-P8iX0s5285ec-AZIiw4EHZSv50lnRxI-h7coPVPzvEs7WMv4m8qNt1SZnXtifnIs5GEHgE921ocKRzI9CkRbMmu3OuVEMuAXCukQl6f61iDOFoi6ShDcTvsgjQyjVoQkOj9VdOTn7005GmMWC1c6ZexvbmuNQr_YOkqP-iKX2yQ5sKTrUb9htAKPOraQlUE14_lDJdS4IDuGS-AQyq39adBvbotlhRiR3NBZyt7cckyMZxVoflBK',
+              },
+              {
+                category: 'MOBILITÄT',
+                name: 'Leichtgewicht-Rollator Carbon',
+                description: 'Maximaler Komfort und Sicherheit durch extrem leichtes Eigengewicht.',
+                price: '289,00 €',
+                image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBcLnR3dIoBZ16X53HzsnSH_Ke3rh_KEldPGtNb1TZ-a-TUyzcaNO5s880ga_D1rXu4HABWlx_pYPiWp50rw8QEaa6N0v3R0hw5uK1wd8K0YYMYDCXZgaw26jEmdndX5zbbgyC7DpiLpmG-iyGtJaKkJc-7L9QySvIaDlporZKsKSC1_VrjtP-Lwc9rCcj9bYzAdBb8_hz0EogRxsRm1THsvvdOTWk1FyyFWTQ2vxq3fPg4OW3sdXb8QtxEqFFfycZa4RvQxPP0nm_7',
+              },
+              {
+                category: 'DIAGNOSTIK',
+                name: 'Blutdruckmessgerät Smart Connect',
+                description: 'Vollautomatische Messung am Oberarm mit App-Anbindung zur Kontrolle.',
+                price: '74,50 €',
+                image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBZaseXT2_HEtyXzy6fW23Rq55aWCVcbFeqaJw-XJc1YdP-CsZpLcEZHDHojw14ZXNmX425SF5MLj4c-7FZUq0iSciNH7HCHXPzNzT8N-2Jiiib0PYij_CtCUh3kiLaRusH1yShC-27bvCPT_UhwaFZRZKeY1J0kkGe14T0Fr_PuBa7REnxJkNfoTdK1-8crnMJ7ofpDwPzcg57L_fAsmIN0kzNTNGnzF5I_kZtmYQJEzoJiYIIgbA7z26nqFPBJrRfwifrX-iq2aU3',
+              },
+            ].map((p) => (
+              <div key={p.name} className="bg-white border border-slate-200 p-6 rounded-xl group hover:shadow-lg transition-all duration-300">
+                <div className="aspect-square mb-6 bg-slate-50 rounded-lg flex items-center justify-center overflow-hidden">
+                  <img src={p.image} alt={p.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                 </div>
-              )
-            })}
+                <span className="text-xs font-bold text-teal-700 mb-2 block tracking-widest">{p.category}</span>
+                <h3 className="font-manrope text-lg font-semibold mb-2 text-slate-900">{p.name}</h3>
+                <p className="text-slate-500 text-sm mb-4">{p.description}</p>
+                <div className="flex justify-between items-center">
+                  <span className="font-manrope text-2xl font-bold text-slate-900">{p.price}</span>
+                  <button className="bg-slate-100 p-2 rounded-full hover:bg-teal-700 hover:text-white transition-colors">
+                    <span className="material-symbols-outlined">add_shopping_cart</span>
+                  </button>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -123,14 +119,14 @@ export default async function Home() {
                 category: 'RATGEBER',
                 date: '15. Mai 2024',
                 title: 'Mobilität im Alter: So bleiben Sie aktiv und sicher',
-                excerpt: 'Regelmäßige Bewegung ist der Schlüssel zu einem gesunden Altern. Wir zeigen Ihnen, welche Hilfsmittel Sie dabei unterstützen können.',
+                excerpt: 'Regelmäßige Bewegung ist der Schlüssel zu einem gesunden Altern. Wir zeigen Ihnen, welche Hilfsmittel Sie dabei unterstützen können, Ihre Selbstständigkeit bis ins hohe Alter zu bewahren.',
                 image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBW4MCbwIPQ2iwpvQozc23ky79_NGlQNt3FHM_MDZwG1nSH3duhBwZsUWgLGrBiotwkGCUKVP85ShO27lu9Z_KEoFF_3Sz7zVU9IvfnFugAohV9hxJmpfMrH5397kW8ExedFS0oGP-BBtq3tbozj0Y4P7GWsul22Dbs0cGe6ZyG73N6Z_JppzPtbniqJy6RF_JQtqUA1AXBWoogUUDu-kls5H8c4-7FXOpzuvKE4FyX4LHtfeHNzGIh1lYpdX4f0vN--IKU0JZz67Zy',
               },
               {
                 category: 'INNOVATION',
                 date: '10. Mai 2024',
                 title: 'Digitalisierung der Pflege: Trends für 2024',
-                excerpt: 'Smart-Home-Lösungen und digitale Überwachungssysteme revolutionieren die häusliche Pflege.',
+                excerpt: 'Smart-Home-Lösungen und digitale Überwachungssysteme revolutionieren die häusliche Pflege. Erfahren Sie, welche Technologien heute bereits den Alltag von Patienten und Angehörigen erleichtern.',
                 image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBZaseXT2_HEtyXzy6fW23Rq55aWCVcbFeqaJw-XJc1YdP-CsZpLcEZHDHojw14ZXNmX425SF5MLj4c-7FZUq0iSciNH7HCHXPzNzT8N-2Jiiib0PYij_CtCUh3kiLaRusH1yShC-27bvCPT_UhwaFZRZKeY1J0kkGe14T0Fr_PuBa7REnxJkNfoTdK1-8crnMJ7ofpDwPzcg57L_fAsmIN0kzNTNGnzF5I_kZtmYQJEzoJiYIIgbA7z26nqFPBJrRfwifrX-iq2aU3',
               },
             ].map((post) => (
