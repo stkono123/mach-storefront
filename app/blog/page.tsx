@@ -37,8 +37,10 @@ export default function Blog() {
   return (
     <div className="max-w-7xl mx-auto px-8 py-16">
       <div className="mb-12">
-        <h1 className="font-manrope text-headline-xl text-[#004c4c] mb-4">Gesundheitsmagazin</h1>
-        <p className="text-[#515f78] text-body-lg max-w-2xl">
+        <h1 className="text-5xl font-bold text-slate-900 mb-4" style={{ fontFamily: 'Manrope, sans-serif' }}>
+          Gesundheitsmagazin
+        </h1>
+        <p className="text-slate-500 text-lg max-w-2xl">
           Wissen, Tipps und Neuigkeiten rund um Gesundheit, Pflege und medizinische Hilfsmittel.
         </p>
       </div>
@@ -46,16 +48,18 @@ export default function Blog() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
         {posts.map((post) => (
           <article key={post.id} className="group cursor-pointer">
-            <div className="aspect-[16/9] mb-6 overflow-hidden rounded-lg">
+            <div className="aspect-video mb-6 overflow-hidden rounded-xl">
               <img src={post.image} alt={post.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
             </div>
             <div className="flex items-center gap-4 mb-4">
-              <span className="text-xs bg-[#e7eeff] text-[#55637d] px-3 py-1 rounded-full font-bold">{post.category}</span>
-              <span className="text-body-sm text-[#515f78]">{post.date}</span>
+              <span className="text-xs bg-slate-100 text-slate-600 px-3 py-1 rounded-full font-bold">{post.category}</span>
+              <span className="text-sm text-slate-500">{post.date}</span>
             </div>
-            <h2 className="font-manrope text-headline-md mb-4 group-hover:text-[#004c4c] transition-colors">{post.title}</h2>
-            <p className="text-[#515f78] text-body-md line-clamp-3">{post.excerpt}</p>
-            <div className="mt-6 flex items-center gap-2 text-[#004c4c] font-bold">
+            <h2 className="text-2xl font-semibold mb-4 group-hover:text-teal-700 transition-colors text-slate-900" style={{ fontFamily: 'Manrope, sans-serif' }}>
+              {post.title}
+            </h2>
+            <p className="text-slate-500 text-base leading-relaxed">{post.excerpt}</p>
+            <div className="mt-6 flex items-center gap-2 text-teal-700 font-bold">
               Weiterlesen <span className="material-symbols-outlined text-sm">open_in_new</span>
             </div>
           </article>
