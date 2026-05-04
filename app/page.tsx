@@ -67,7 +67,7 @@ export default function Home() {
           </div>
           <div className="relative h-[500px] rounded-2xl overflow-hidden shadow-2xl">
             <img
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuARh9GcACiBYKvIwgn-KW_PwVEYDipE5NzKnUGC1uDwvEVHmH7CzAX4ynS4CG_lFarUgBZw_kqYhcq6D3Oc-sBEUvpY_4SFS1tdHN30m-GiKZDKMylbyo-fluGK1ed-UO-4lemGFxlMr0g1H5RCMF6BI0m9P7wJ7ttBu4x4kBKtZ4HFgFJE7RovahaeT1yAxI7zF98R8pRPcixmqLAXKRtg4R5_3M-n67Nx6cVKdk59fP9bHWGmAgQruZ9MzF-B3o1MY3fKnIBhPNdK"
+              src="/hero.png"
               alt="Sanitätshaus Beratung"
               className="absolute inset-0 w-full h-full object-cover"
             />
