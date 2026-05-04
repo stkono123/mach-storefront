@@ -18,7 +18,7 @@ export default function Home() {
             </p>
             <div className="flex flex-wrap gap-4">
               <a href="/produkte" className="bg-teal-700 text-white px-8 py-4 rounded-lg font-bold text-base hover:bg-teal-800 shadow-md transition-all active:scale-95 inline-block">
-                Jetzt Entdecken
+                Jetzt entdecken
               </a>
               <a href="/kontakt" className="border-2 border-teal-700 text-teal-700 px-8 py-4 rounded-lg font-bold text-base hover:bg-teal-50 transition-all inline-block">
                 Beratung vereinbaren
