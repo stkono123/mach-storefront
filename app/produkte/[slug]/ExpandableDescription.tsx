@@ -14,7 +14,7 @@ export function ExpandableDescription({ text }: { text: string }) {
           WebkitLineClamp: 7,
           overflow: 'hidden',
         }}
-        className="text-slate-600 text-sm leading-relaxed prose prose-sm max-w-none"
+        className="text-slate-600 text-sm leading-relaxed [&_h1]:text-xl [&_h1]:font-bold [&_h1]:mb-3 [&_h2]:text-lg [&_h2]:font-bold [&_h2]:mb-2 [&_h3]:text-base [&_h3]:font-semibold [&_h3]:mb-2 [&_p]:mb-3 [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:mb-3 [&_li]:mb-1 [&_strong]:font-semibold [&_strong]:text-slate-700"
         dangerouslySetInnerHTML={{ __html: text }}
       />
       <button
