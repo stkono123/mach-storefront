@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 async function getProducts() {
   const res = await fetch(
     `https://mach-storefront-sigma.vercel.app/api/products`,
@@ -26,11 +28,11 @@ export default async function ProdukteListe() {
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {products.map((p: any) => {
             const name =
-              p.masterData?.current?.name?.['de'] ||
+              p.masterData?.current?.name?.['de-DE'] ||
               p.masterData?.current?.name?.['en-US'] ||
               'Produkt'
             const description =
-              p.masterData?.current?.description?.['de'] ||
+              p.masterData?.current?.description?.['de-DE'] ||
               p.masterData?.current?.description?.['en-US'] ||
               ''
             const price =
@@ -40,40 +42,45 @@ export default async function ProdukteListe() {
               : 'Preis auf Anfrage'
             const image =
               p.masterData?.current?.masterVariant?.images?.[0]?.url
+            const slug =
+              p.masterData?.current?.slug?.['de-DE'] || p.key
 
             return (
-              <div
+              <Link
                 key={p.id}
-                className="bg-white border border-slate-200 p-5 rounded-xl group hover:shadow-lg transition-all duration-300"
+                href={`/produkte/${slug}`}
+                className="block group"
               >
-                <div className="aspect-square mb-4 bg-slate-50 rounded-lg flex items-center justify-center overflow-hidden">
-                  {image ? (
-                    <img
-                      src={image}
-                      alt={name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                  ) : (
-                    <span className="text-slate-300 text-5xl">📦</span>
-                  )}
-                </div>
-                <h3 className="font-manrope text-sm font-semibold mb-2 text-slate-900 line-clamp-2">
-                  {name}
-                </h3>
-                <p className="text-slate-400 text-xs mb-4 line-clamp-2">
-                  {description}
-                </p>
-                <div className="flex justify-between items-center">
-                  <span className="font-manrope text-lg font-bold text-slate-900">
-                    {priceFormatted}
-                  </span>
-                  <button className="bg-slate-100 p-2 rounded-full hover:bg-teal-700 hover:text-white transition-colors">
-                    <span className="material-symbols-outlined text-sm">
-                      add_shopping_cart
+                <div className="bg-white border border-slate-200 p-5 rounded-xl hover:shadow-lg transition-all duration-300 h-full">
+                  <div className="aspect-square mb-4 bg-slate-50 rounded-lg flex items-center justify-center overflow-hidden">
+                    {image ? (
+                      <img
+                        src={image}
+                        alt={name}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                    ) : (
+                      <span className="text-slate-300 text-5xl">📦</span>
+                    )}
+                  </div>
+                  <h3 className="font-manrope text-sm font-semibold mb-2 text-slate-900 line-clamp-2">
+                    {name}
+                  </h3>
+                  <p className="text-slate-400 text-xs mb-4 line-clamp-2">
+                    {description}
+                  </p>
+                  <div className="flex justify-between items-center">
+                    <span className="font-manrope text-lg font-bold text-slate-900">
+                      {priceFormatted}
                     </span>
-                  </button>
+                    <button className="bg-slate-100 p-2 rounded-full hover:bg-teal-700 hover:text-white transition-colors">
+                      <span className="material-symbols-outlined text-sm">
+                        add_shopping_cart
+                      </span>
+                    </button>
+                  </div>
                 </div>
-              </div>
+              </Link>
             )
           })}
         </div>
