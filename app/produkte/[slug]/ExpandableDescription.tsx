@@ -14,10 +14,9 @@ export function ExpandableDescription({ text }: { text: string }) {
           WebkitLineClamp: 7,
           overflow: 'hidden',
         }}
-        className="text-slate-600 text-sm leading-relaxed"
-      >
-        {text}
-      </div>
+        className="text-slate-600 text-sm leading-relaxed prose prose-sm max-w-none"
+        dangerouslySetInnerHTML={{ __html: text }}
+      />
       <button
         onClick={() => setExpanded(!expanded)}
         className="mt-3 text-sm font-bold text-teal-700 hover:text-teal-900 transition-colors text-left block"
